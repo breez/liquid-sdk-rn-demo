@@ -1,9 +1,23 @@
 import { Stack } from "expo-router";
+import { Provider } from "react-redux";
 import { Text, View } from "react-native";
 import { useEffect, useState } from "react";
 
+import { store } from "@/store";
+import { setInfo } from "@/store/reducers/info";
 import * as liquidSdk from "@breeztech/react-native-breez-sdk-liquid";
 import { defaultConfig, LiquidNetwork, SdkEvent, SdkEventVariant } from "@breeztech/react-native-breez-sdk-liquid";
+async function onEvent(e: SdkEvent) {
+  console.log("RECEIVED NEW EVENT", e)
+  switch (e.type) {
+    case SdkEventVariant.SYNCED:
+      await liquidSdk.getInfo()
+        .then((info) => store.dispatch(setInfo(info)))
+        .catch(console.error)
+      break;
+  }
+}
+
 async function initSdk(): Promise<void> {
   const config = await defaultConfig(LiquidNetwork.TESTNET, process.env.EXPO_PUBLIC_BREEZ_API_KEY);
   // TODO: DO NOT use the following lines in production.
@@ -19,6 +33,8 @@ async function initSdk(): Promise<void> {
   if (!mnemonic) throw Error('No mnemonic found');
 
   await liquidSdk.connect({ config, mnemonic });
+  await liquidSdk.addEventListener(onEvent)
+    .catch(console.error)
 }
 
 export default function RootLayout() {
@@ -45,8 +61,10 @@ export default function RootLayout() {
   );
 
   return (
+    <Provider store={store}>
       <Stack>
         <Stack.Screen name="index" />
       </Stack>
+    </Provider>
   )
 }
