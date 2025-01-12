@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 import { store } from "@/store";
 import { setInfo } from "@/store/reducers/info";
+import { setPayments } from "@/store/reducers/payments";
+
 import * as liquidSdk from "@breeztech/react-native-breez-sdk-liquid";
 import { defaultConfig, LiquidNetwork, SdkEvent, SdkEventVariant } from "@breeztech/react-native-breez-sdk-liquid";
 
@@ -12,8 +14,11 @@ async function onEvent(e: SdkEvent) {
   console.log("RECEIVED NEW EVENT", e)
   switch (e.type) {
     case SdkEventVariant.SYNCED:
-      await liquidSdk.getInfo()
+      liquidSdk.getInfo()
         .then((info) => store.dispatch(setInfo(info)))
+        .catch(console.error)
+      liquidSdk.listPayments({ limit: undefined })
+        .then((payments) => store.dispatch(setPayments(payments)))
         .catch(console.error)
       break;
   }

@@ -1,11 +1,13 @@
 import infoReducer from './reducers/info';
 import receiveReducer from './reducers/receive';
+import paymentsReducer from './reducers/payments';
 import { configureStore } from "@reduxjs/toolkit";
 
 export const store = configureStore({
   reducer: {
     info: infoReducer,
-    receive: receiveReducer
+    receive: receiveReducer,
+    payments: paymentsReducer
   }
 })
 
