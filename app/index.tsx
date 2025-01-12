@@ -7,6 +7,7 @@ import WalletInfo from "@/components/WalletInfo";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getInfo } from "@breeztech/react-native-breez-sdk-liquid";
 import { setInfo } from "@/store/reducers/info";
+import PaymentsList from "@/components/PaymentsList";
 
 export default function Index() {
   const dispatch = useAppDispatch();
@@ -40,6 +41,7 @@ export default function Index() {
               Add funds
             </Link>
           </View>
+          <PaymentsList />
         </>
       ) : <Text>Loading wallet information...</Text>
       }
