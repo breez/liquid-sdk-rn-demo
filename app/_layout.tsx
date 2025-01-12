@@ -7,6 +7,7 @@ import { store } from "@/store";
 import { setInfo } from "@/store/reducers/info";
 import * as liquidSdk from "@breeztech/react-native-breez-sdk-liquid";
 import { defaultConfig, LiquidNetwork, SdkEvent, SdkEventVariant } from "@breeztech/react-native-breez-sdk-liquid";
+
 async function onEvent(e: SdkEvent) {
   console.log("RECEIVED NEW EVENT", e)
   switch (e.type) {
@@ -63,7 +64,20 @@ export default function RootLayout() {
   return (
     <Provider store={store}>
       <Stack>
-        <Stack.Screen name="index" />
+        <Stack.Screen
+          name="index"
+          options={{
+            headerTitle: 'Breez Nodeless SDK RN Demo'
+          }}
+        />
+        <Stack.Screen
+          name="receive"
+          options={{
+            presentation: 'transparentModal',
+            animation: 'fade',
+            headerShown: false
+          }}
+        />
       </Stack>
     </Provider>
   )
