@@ -40,6 +40,16 @@ export default function Index() {
             }}>
               Add funds
             </Link>
+            <Link href="/send/prepare" style={{
+              paddingVertical: 6,
+              paddingHorizontal: 15,
+              borderColor: 'lightgray',
+              borderWidth: 1,
+              borderRadius: 20,
+              color: '#0184fb'
+            }}>
+              Send funds
+            </Link>
           </View>
           <PaymentsList />
         </>

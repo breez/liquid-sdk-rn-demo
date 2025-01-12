@@ -83,6 +83,14 @@ export default function RootLayout() {
             headerShown: false
           }}
         />
+        <Stack.Screen
+          name="send"
+          options={{
+            presentation: 'transparentModal',
+            animation: 'fade',
+            headerShown: false
+          }}
+        />
       </Stack>
     </Provider>
   )
